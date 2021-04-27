@@ -56,14 +56,20 @@ if __name__ == '__main__':
         "Тип модели (rnn, transformer)")
     parser.add_argument("-p", "--path", default='', help="Путь к весам модели")
     parser.add_argument("-f", "--filename", default='', help="Путь к файлу с видео")
-    parser.add_argument("-n", "--n", default=float('inf'), help="Количество кадров")
+    parser.add_argument("-n", "--n", help="Количество кадров")
     
     args = parser.parse_args()
-
-    filename = args.filename
-    mode = args.mode
-    model_path = args.path
-    n_max = args.n
+    
+    if args.filename:
+        filename = args.filename
+    if args.mode:
+        mode = args.mode
+    if args.path:
+        model_path = args.path
+    if args.n:
+        n_max = args.n
+    else:
+        n_max = float('inf')
 
     model = get_model(model_path, mode)
     img, img_len = prepare_input(filename, n_max)
