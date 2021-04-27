@@ -6,6 +6,11 @@ import torch
 import torchvision.transforms as transforms
 
 
+h, w = 224, 224
+mean = [0.485, 0.456, 0.406]
+std = [0.229, 0.224, 0.225]
+
+
 # Возвращает код для корректного поворота видео
 def check_rotation(path_video_file):
 
