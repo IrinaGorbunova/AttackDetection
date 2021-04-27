@@ -63,7 +63,10 @@ if __name__ == '__main__':
 
     model = get_model(model_path, mode)
     img, img_len = prepare_input(filename, n_max)
-    out, prob = predict(model, img, img_len)
+    if mode == 'transformer':
+        out, prob = predict(model, img, img_len, mask=None)
+    else:
+        out, prob = predict(model, img, img_len)
 
     if out == 1:
         print('Attack : {.2f}%'.format(prob*100))
