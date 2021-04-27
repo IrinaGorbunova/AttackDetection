@@ -20,7 +20,7 @@ def get_model(model_path, mode='transformer'):
         model = CNN_RNN()
 
     try:
-        model.load_state_dict(torch.load(model_path))
+        model.load_state_dict(torch.load(model_path, map_location=device))
     except:
         print('Wrong mode or model path!')
 

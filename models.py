@@ -6,6 +6,9 @@ import torch.nn.functional as F
 import torchvision.models as models
 
 
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+
 class CNNEncoder(nn.Module):
 
     def __init__(self, pretrained=True):
