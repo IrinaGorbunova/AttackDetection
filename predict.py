@@ -45,7 +45,7 @@ def predict(model, mode, img, img_len):
     else:
         output = model(img.to(device), img_len)
 
-    return output.argmax(-1).tolist(), output.max(-1).tolist()
+    return output.argmax(-1).tolist(), output.max(-1)
 
 
 if __name__ == '__main__':
