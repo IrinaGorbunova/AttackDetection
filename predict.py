@@ -10,7 +10,12 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 def get_model(model_path, mode='transformer'):
 
     if mode == 'transformer':
-        model = CNN_Transformer()
+        model = CNN_Transformer(num_classes=2,
+                                nlayers=1,
+                                hidden=32,
+                                nhead=4,
+                                dim_feedforward=128,
+                                dropout=0.5)
     else:
         model = CNN_RNN()
 
