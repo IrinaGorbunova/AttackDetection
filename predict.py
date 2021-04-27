@@ -67,7 +67,7 @@ if __name__ == '__main__':
     if args.path:
         model_path = args.path
     if args.n:
-        n_max = args.n
+        n_max = int(args.n)
     else:
         n_max = float('inf')
 
