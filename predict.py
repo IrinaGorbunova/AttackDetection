@@ -45,7 +45,8 @@ def predict(model, mode, img, img_len):
     else:
         output = model(img.to(device), img_len)
 
-    return output.argmax(-1).tolist(), output.max(-1)
+    return torch.softmax(output, -1).max(-1)[0].detach().tolist()[0], \
+            output.max(-1)[1].detach().tolist()[0]
 
 
 if __name__ == '__main__':
@@ -66,9 +67,9 @@ if __name__ == '__main__':
 
     model = get_model(model_path, mode)
     img, img_len = prepare_input(filename, n_max)
-    out, prob = predict(model, mode, img, img_len)
+    prob, out = predict(model, mode, img, img_len)
 
     if out == 1:
-        print('Attack : {.2f}%'.format(prob*100))
+        print('Attack : {:.2%}'.format(prob))
     else:
-        print('Original : {.2f}%'.format(prob*100))
+        print('Original : {:.2%}'.format(prob))
