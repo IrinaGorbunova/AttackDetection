@@ -32,7 +32,7 @@ def prepare_input(filename, n_max=float('inf')):
     frames, f_len = get_frames(filename, n_max=n_max)
     img_tensor = transform_frames(frames)
 
-    return img_tensor.unsqueeze(1), torch.LongTensor([f_len])
+    return img_tensor.unsqueeze(0), torch.LongTensor([f_len])
 
 
 def predict(model, mode, img, img_len):
