@@ -35,12 +35,15 @@ def prepare_input(filename, n_max=float('inf')):
     return img_tensor.unsqueeze(1), torch.LongTensor([f_len])
 
 
-def predict(model, img, img_len):
+def predict(model, mode, img, img_len):
 
     model = model.to(device)
     model.eval()
 
-    output = model(img.to(device), img_len)
+    if mode == 'transformer':
+        output = model(img.to(device), img_len, mask=None)
+    else:
+        output = model(img.to(device), img_len)
 
     return output.argmax(-1).tolist(), output.max(-1).tolist()
 
@@ -63,10 +66,7 @@ if __name__ == '__main__':
 
     model = get_model(model_path, mode)
     img, img_len = prepare_input(filename, n_max)
-    if mode == 'transformer':
-        out, prob = predict(model, img, img_len, mask=None)
-    else:
-        out, prob = predict(model, img, img_len)
+    out, prob = predict(model, mode, img, img_len)
 
     if out == 1:
         print('Attack : {.2f}%'.format(prob*100))
