@@ -9,6 +9,7 @@ import torchvision.models as models
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 
+# CNN энкодер на основе ResNet 34
 class CNNEncoder(nn.Module):
 
     def __init__(self, pretrained=True):
@@ -20,19 +21,19 @@ class CNNEncoder(nn.Module):
 
     def forward(self, image):
 
-        # (batch_size, 512, 1, 1)
         out = self.resnet(image)
 
         return out
 
 
+# CNN-RNN классификатор для видео
 class CNN_RNN(nn.Module):
 
     def __init__(self, num_classes, rnn_num_layers, rnn_hidden_size, bidirectional, dropout=0):
 
         super(CNN_RNN, self).__init__()
 
-        self.hidden = rnn_hidden_size
+        self.hidden = hidden
 
         # CNN
         self.cnn = CNNEncoder()
@@ -40,10 +41,10 @@ class CNN_RNN(nn.Module):
         
         # RNN
         if rnn_num_layers > 1:
-            self.rnn = nn.LSTM(512, rnn_hidden_size, rnn_num_layers, 
+            self.rnn = nn.LSTM(self.hidden, rnn_hidden_size, rnn_num_layers, 
                                bidirectional=bidirectional, dropout=dropout)
         else:
-            self.rnn = nn.LSTM(512, rnn_hidden_size, rnn_num_layers, 
+            self.rnn = nn.LSTM(self.hidden, rnn_hidden_size, rnn_num_layers, 
                                bidirectional=bidirectional)
         
         # Classifier
@@ -56,25 +57,22 @@ class CNN_RNN(nn.Module):
     def forward(self, frames, f_lens):
 
         bs, s, c, height, width = frames.shape
-        frames_emb = torch.zeros(s, bs, self.hidden) #.to(device)
+        frames_emb = torch.zeros(s, bs, self.hidden).to(device)
 
         for i in range(s):
             img_emb = self.cnn(frames[:, i])
             img_emb = torch.relu(self.conv(img_emb))
             frames_emb[i] = img_emb.view(bs, -1)
-        frames_emb = self.dropout(frames_emb)
-        lengths_ordered, perm_idx = f_lens.sort(0, descending=True)
-        # use input of descending length
-        packed_frames_emb = nn.utils.rnn.pack_padded_sequence(frames_emb[:, perm_idx], lengths_ordered)
-        packed_out, (h, c) = self.rnn(packed_frames_emb.to(device))
+
+        packed_frames_emb = nn.utils.rnn.pack_padded_sequence(frames_emb, f_lens, enforce_sorted=False)
+        packed_out, h = self.rnn(packed_frames_emb)
         out, _ = nn.utils.rnn.pad_packed_sequence(packed_out)
-        _, unperm_idx = perm_idx.sort(0)
-        out = out[:, unperm_idx]
-        out = self.fc(torch.max(out, 0)[0]) #self.fc(torch.cat((torch.mean(out, 0), torch.max(out, 0)[0]), 1)) #(torch.max(out, 0)[0])
+        out = self.fc(self.dropout(torch.mean(out, 0)))
  
         return out
 
 
+# Позиционное кодирование для трансформера
 class PositionalEncoding(nn.Module):
     
     def __init__(self, d_model, dropout=0.1, max_len=5000):
@@ -99,6 +97,7 @@ class PositionalEncoding(nn.Module):
         return self.dropout(x)
 
 
+# CNN-Transformer классификатор для видео
 class CNN_Transformer(nn.Module):
 
     def __init__(self, num_classes, nlayers, hidden, nhead, dim_feedforward, 
@@ -126,9 +125,9 @@ class CNN_Transformer(nn.Module):
 
         # Classifier
         self.dropout= nn.Dropout(dropout)
-        self.fc = nn.Linear(hidden*1, num_classes)
+        self.fc = nn.Linear(hidden, num_classes)
 
-    def forward(self, frames, f_lens, mask):
+    def forward(self, frames, mask=None):
         
         bs, s, c, height, width = frames.shape
         frames_emb = torch.zeros(s, bs, self.hidden).to(device)
