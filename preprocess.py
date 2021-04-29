@@ -11,8 +11,8 @@ mean = [0.485, 0.456, 0.406]
 std = [0.229, 0.224, 0.225]
 
 
-# Возвращает код для корректного поворота видео
 def check_rotation(path_video_file):
+    "Возвращает код для корректного поворота видео"
 
     meta_dict = ffmpeg.probe(path_video_file)
 
@@ -30,14 +30,14 @@ def check_rotation(path_video_file):
     return rotateCode
 
 
-# Выполняет поворот кадра в соответствии с указанным кодом
 def correct_rotation(frame, rotateCode):
+    "Выполняет поворот кадра в соответствии с указанным кодом"
 
     return cv2.rotate(frame, rotateCode)
 
 
-# Разбивает видео на указанное количество кадров
 def get_frames(filename, n_max=float('inf')):
+    "Разбивает видео на указанное количество кадров"
     
     frames = []
     v_cap = cv2.VideoCapture(filename)
@@ -62,8 +62,8 @@ def get_frames(filename, n_max=float('inf')):
     return frames, len(frames)
 
 
-# Преобразует список кадров в тензор
 def transform_frames(frames):
+    "Преобразует список кадров в тензор"
 
     img_transform = transforms.Compose([
                 transforms.Resize((h,w)),

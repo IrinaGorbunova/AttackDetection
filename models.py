@@ -9,8 +9,8 @@ import torchvision.models as models
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 
-# CNN энкодер на основе ResNet 34
 class CNNEncoder(nn.Module):
+    "CNN энкодер на основе ResNet 34"
 
     def __init__(self, pretrained=True):
         super(CNNEncoder, self).__init__()
@@ -26,8 +26,8 @@ class CNNEncoder(nn.Module):
         return out
 
 
-# CNN-RNN классификатор для видео
 class CNN_RNN(nn.Module):
+    "Модель классификатора с архитектурой CNN-RNN"
 
     def __init__(self, num_classes, rnn_num_layers, rnn_hidden_size, bidirectional, dropout=0):
 
@@ -72,8 +72,8 @@ class CNN_RNN(nn.Module):
         return out
 
 
-# Позиционное кодирование для трансформера
 class PositionalEncoding(nn.Module):
+    "Позиционное кодирование для трансформера"
     
     def __init__(self, d_model, dropout=0.1, max_len=5000):
 
@@ -97,8 +97,8 @@ class PositionalEncoding(nn.Module):
         return self.dropout(x)
 
 
-# CNN-Transformer классификатор для видео
 class CNN_Transformer(nn.Module):
+    "Модель классификатора с архитектурой CNN-Transformer"
 
     def __init__(self, num_classes, nlayers, hidden, nhead, dim_feedforward, 
                  dropout=0, activation='relu'):
