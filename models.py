@@ -29,7 +29,7 @@ class CNNEncoder(nn.Module):
 class CNN_RNN(nn.Module):
     "Модель классификатора с архитектурой CNN-RNN"
 
-    def __init__(self, num_classes, rnn_num_layers, rnn_hidden_size, bidirectional, dropout=0):
+    def __init__(self, num_classes, rnn_num_layers, hidden, rnn_hidden_size, bidirectional, dropout=0):
 
         super(CNN_RNN, self).__init__()
 
