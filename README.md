@@ -23,13 +23,13 @@ RNN и трансформер обрабатывают всю последова
 
 ### CNN-Transformer
 
-В папке CNN_Transformer можно найти иллюстрацию [архитектуры](https://github.com/IrinaGorbunova/AttackDetection/blob/main/CNN_Transformer/CNN-Transformer.png) модели, а также два ноутбука:
+В папке CNN_Transformer можно найти схему с [архитектурой](https://github.com/IrinaGorbunova/AttackDetection/blob/main/CNN_Transformer/CNN-Transformer.png) модели, а также два ноутбука:
 - [v1_CNN_Transformer.ipynb](https://github.com/IrinaGorbunova/AttackDetection/blob/main/CNN_Transformer/v1_CNN_Transformer.ipynb) - обучение модели только на основном датасете.
 - [v2_CNN_Transformer.ipynb](https://github.com/IrinaGorbunova/AttackDetection/blob/main/CNN_Transformer/v2_CNN_Transformer.ipynb) - обучение модели на основном и дополнительном датасетах.
 
 ### CNN-RNN
 
-В папке CNN_RNN можно найти иллюстрацию [архитектуры](https://github.com/IrinaGorbunova/AttackDetection/blob/main/CNN_RNN/CNN_RNN.png) модели, а также ноутбук
+В папке CNN_RNN можно найти схему с [архитектурой](https://github.com/IrinaGorbunova/AttackDetection/blob/main/CNN_RNN/CNN_RNN.png) модели, а также ноутбук
 [v2_CNN_RNN.ipynb](https://github.com/IrinaGorbunova/AttackDetection/blob/main/CNN_RNN/v2_CNN_RNN.ipynb) c обучением модели на основном и дополнительном датасетах.
 
 Сохраненные веса всех моделей можно скачать по [ссылке](https://drive.google.com/drive/folders/1CkgYQdyi9ZVBIDCiqMcrHak1L4ylgmRR?usp=sharing)
