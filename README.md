@@ -41,5 +41,5 @@ RNN и трансформер обрабатывают всю последова
 В папке RNN_Autoencoder дополнительно представлена модель RNN автоэнкодера. Основной датасет содержит очень большое количество реальных примеров, что можно использовать для обучения автоэнкодера. Ошибка реконструкции на атаках будет выше, чем на реальных примерах, что можно использовать для их обнаружения. В папке лежат два ноутбука:
 - [v1_RNN_AE.ipynb](https://github.com/IrinaGorbunova/AttackDetection/blob/main/RNN_Autoencoder/v1_RNN_AE.ipynb) - для обучения используются эмбеддинги из ResNet 34,
 - [v2_RNN_AE.ipynb](https://github.com/IrinaGorbunova/AttackDetection/blob/main/RNN_Autoencoder/v2_RNN_AE.ipynb) - для обучения используются эмбеддинги из CNN части модели v2_CNN_Transformer
-- 
+
 и веса соответствующих моделей.
