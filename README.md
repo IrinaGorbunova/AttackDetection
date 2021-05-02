@@ -35,7 +35,9 @@ RNN последовательно обрабатывает кадр за кад
 [v2_CNN_RNN.ipynb](https://github.com/IrinaGorbunova/AttackDetection/blob/main/CNN_RNN/v2_CNN_RNN.ipynb) c обучением модели на основном и дополнительном датасетах.
 
 Сохраненные веса всех моделей можно скачать по [ссылке](https://drive.google.com/drive/folders/1CkgYQdyi9ZVBIDCiqMcrHak1L4ylgmRR?usp=sharing)
-
+\
+\
+\
 Ноутбук [Test.ipynb](https://github.com/IrinaGorbunova/AttackDetection/blob/main/Test.ipynb) демонстрирует процесс получения предсказаний с помощью моделей.
 
 Папка Examples содержит четыре примера видео для проведения теста.
